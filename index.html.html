@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FDF3E7">
+<title>如果你的 OC 来到现实，TA 会和你说什么？</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+html,body{margin:0;padding:0}
+body{
+  --pink:#F6A9C0; --mint:#A8DBC8; --cream:#FDF3E7; --lilac:#C7B8E8;
+  --ink:#4A3A44; --sub:#8B7A84;
+  --card-bg:rgba(255,255,255,.95); --card-line:rgba(246,169,192,.32);
+  --bubble:#FFFFFF; --shadow:0 10px 28px rgba(211,141,166,.14);
+  --font-hand:"Kaiti SC","STKaiti","KaiTi","楷体","Yuanti SC","YouYuan","圆体",serif;
+  --font-base:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  margin:0; min-height:100vh; min-height:100dvh; color:var(--ink);
+  font-family:var(--font-base); font-size:16px; line-height:1.6;
+  background:
+    radial-gradient(120% 80% at 82% -10%, #FFF0F6 0%, rgba(255,240,246,0) 62%),
+    radial-gradient(90% 70% at 0% 108%, #E9F7F0 0%, rgba(233,247,240,0) 58%),
+    var(--cream);
+  overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+  transition:background .45s ease,color .45s ease;
+}
+body.hidden-end{
+  --ink:#F6EDF7; --sub:#B9A6C2;
+  --card-bg:rgba(38,27,52,.93); --card-line:rgba(255,255,255,.14);
+  --bubble:#231830; --shadow:0 14px 34px rgba(0,0,0,.45);
+  background:
+    radial-gradient(100% 70% at 82% -10%, #43284F 0%, rgba(67,40,79,0) 60%),
+    radial-gradient(80% 60% at 0% 108%, #2A1B3D 0%, rgba(42,27,61,0) 58%),
+    #15101E;
+}
+
+.petals{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.petals i{position:absolute;top:-10vh;display:block;width:11px;height:11px;border-radius:100% 0 100% 0;background:linear-gradient(135deg,#FFD9E6,#F6A9C0);opacity:.72;will-change:transform;animation:fall linear infinite}
+.petals i:nth-child(2n){animation-name:fallB;border-radius:0 100% 0 100%;background:linear-gradient(135deg,#FFE6EF,#F2B7CB)}
+.petals i:nth-child(1){left:3%;animation-duration:12s;animation-delay:-1s;width:10px;height:10px}
+.petals i:nth-child(2){left:11%;animation-duration:16s;animation-delay:-7s}
+.petals i:nth-child(3){left:19%;animation-duration:10s;animation-delay:-3s;width:9px;height:9px}
+.petals i:nth-child(4){left:27%;animation-duration:14s;animation-delay:-10s;width:13px;height:13px}
+.petals i:nth-child(5){left:34%;animation-duration:18s;animation-delay:-5s}
+.petals i:nth-child(6){left:41%;animation-duration:11s;animation-delay:-9s;width:8px;height:8px}
+.petals i:nth-child(7){left:49%;animation-duration:15s;animation-delay:-2s;width:12px;height:12px}
+.petals i:nth-child(8){left:57%;animation-duration:13s;animation-delay:-12s;width:9px;height:9px}
+.petals i:nth-child(9){left:64%;animation-duration:17s;animation-delay:-6s;width:10px;height:10px}
+.petals i:nth-child(10){left:72%;animation-duration:12s;animation-delay:-4s;width:14px;height:14px;opacity:.55}
+.petals i:nth-child(11){left:79%;animation-duration:19s;animation-delay:-14s;width:8px;height:8px}
+.petals i:nth-child(12){left:86%;animation-duration:14s;animation-delay:-8s;width:11px;height:11px}
+.petals i:nth-child(13){left:92%;animation-duration:10s;animation-delay:-11s;width:7px;height:7px}
+.petals i:nth-child(14){left:96%;animation-duration:16s;animation-delay:-3s;width:10px;height:10px}
+
+.app{position:relative;z-index:1;width:100%;max-width:460px;margin:0 auto;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top) + 22px) 20px calc(env(safe-area-inset-bottom) + 26px)}
+
+.screen{display:none;flex:1;flex-direction:column;animation:screenIn .35s ease both}
+.screen.active{display:flex}
+#screenStart{justify-content:center;align-items:center;text-align:center}
+#screenQuiz,#screenResult{justify-content:flex-start}
+
+.start-mark{font-size:32px;line-height:1;color:var(--pink);margin-bottom:16px;animation:bob 4.5s ease-in-out infinite}
+.start-title{margin:0 0 16px;font-family:var(--font-hand);font-weight:700;font-size:clamp(25px,7.4vw,36px);line-height:1.42;letter-spacing:.01em;color:#C2668C;background:linear-gradient(120deg,#E8759B 0%,#B78BDB 52%,#6FB79B 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-wrap:balance}
+.start-sub{margin:0 0 38px;font-size:14px;color:var(--sub);letter-spacing:.03em}
+.start-foot{margin:26px 0 0;font-size:12px;color:var(--sub);opacity:.8;letter-spacing:.05em}
+.btn{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:52px;padding:0 22px;border:none;border-radius:999px;font-family:inherit;font-size:16px;font-weight:700;letter-spacing:.03em;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none;transition:transform .15s ease,box-shadow .2s ease,background .2s ease}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:linear-gradient(135deg,#F58FB0,#C79BE8 70%,#B78BDB);color:#fff;box-shadow:0 12px 26px rgba(214,123,163,.34)}
+.btn-ghost{background:transparent;border:1.5px solid var(--card-line);color:var(--sub)}
+#btnStart{width:min(86%,320px)}
+
+.quiz-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.quiz-count{font-size:13px;color:var(--sub);letter-spacing:.05em}
+.quiz-count b{color:#D97A9B;font-size:15px;font-weight:800}
+body.hidden-end .quiz-count b{color:#F0A7C4}
+.back{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--card-line);background:var(--card-bg);color:var(--sub);font-family:inherit;font-size:13px;cursor:pointer;touch-action:manipulation;transition:transform .15s ease,opacity .2s ease}
+.back:active:not(:disabled){transform:scale(.97)}
+.back:disabled{opacity:.38}
+.progress{height:8px;border-radius:999px;background:rgba(74,58,68,.08);overflow:hidden;margin-bottom:26px}
+.progress i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#F6A9C0,#C7B8E8);transition:width .35s ease}
+.hidden-end .progress{background:rgba(255,255,255,.1)}
+.q-text{margin:0 0 20px;font-size:clamp(19px,5.2vw,22px);line-height:1.55;font-weight:700;letter-spacing:.01em;color:var(--ink)}
+.options{display:flex;flex-direction:column;gap:11px}
+.opt{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;width:100%;min-height:58px;padding:14px 15px;border:1.5px solid var(--card-line);border-radius:16px;background:var(--card-bg);color:var(--ink);box-shadow:0 6px 16px rgba(211,141,166,.08);font-family:inherit;font-size:15px;line-height:1.5;text-align:left;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none;transition:transform .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease;animation:rise .45s cubic-bezier(.22,.9,.34,1) both;animation-delay:var(--d,0s)}
+.opt .mark{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#FFF0F5;border:1px solid rgba(246,169,192,.55);color:#D97A9B;font-size:13px;font-weight:800;transition:background .18s ease,color .18s ease,border-color .18s ease,transform .18s ease}
+.opt .opt-text{display:block;word-break:break-word}
+.opt[aria-pressed="true"]{background:linear-gradient(135deg,rgba(255,233,240,.96),rgba(246,233,255,.96));border-color:var(--pink);box-shadow:0 10px 22px rgba(211,141,166,.2);transform:translateY(-1px) scale(1.008)}
+.opt[aria-pressed="true"] .mark{background:var(--pink);border-color:var(--pink);color:#fff;transform:scale(1.05)}
+.hidden-end .opt{box-shadow:0 6px 18px rgba(0,0,0,.3)}
+.hidden-end .opt .mark{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.2);color:#F0A7C4}
+.hidden-end .opt[aria-pressed="true"]{background:linear-gradient(135deg,rgba(246,169,192,.24),rgba(199,184,232,.24))}
+.quiz-tip{margin:18px 0 0;font-size:12px;color:var(--sub);text-align:center;letter-spacing:.05em}
+
+.res-kicker{margin:6px 0 6px;font-size:12.5px;color:var(--sub);text-align:center;letter-spacing:.18em}
+.res-name{margin:2px 0 14px;font-family:var(--font-hand);font-weight:700;font-size:clamp(38px,12vw,52px);line-height:1.22;text-align:center;letter-spacing:.03em;word-break:break-word;background:linear-gradient(120deg,#E8759B 0%,#B78BDB 55%,#79BFA4 100%);-webkit-background-clip:text;background-clip:text;color:#C2668C;-webkit-text-fill-color:transparent}
+.hidden-end .res-name{background:linear-gradient(120deg,#FFC3DA 0%,#D3B8F5 55%,#A9E6CB 100%);-webkit-background-clip:text;background-clip:text;color:#FFC3DA;-webkit-text-fill-color:transparent}
+.res-tag{display:table;margin:0 auto 22px;padding:6px 14px;border-radius:999px;border:1px solid rgba(246,169,192,.4);background:rgba(246,169,192,.13);font-size:13px;color:#A06682;letter-spacing:.02em}
+.hidden-end .res-tag{color:#E6C9DD;background:rgba(246,169,192,.14);border-color:rgba(246,169,192,.3)}
+.ribbon{display:table;margin:10px auto 8px;padding:5px 14px;border-radius:999px;background:linear-gradient(135deg,#F6A9C0,#C7B8E8);color:#fff;font-size:12px;font-weight:700;letter-spacing:.14em;box-shadow:0 6px 16px rgba(246,169,192,.35)}
+.bubble{position:relative;margin:0 0 22px;padding:18px 20px 20px;border-radius:18px;border:1.5px solid var(--card-line);background:var(--bubble);box-shadow:var(--shadow)}
+.bubble::after{content:"";position:absolute;left:26px;bottom:-8px;width:14px;height:14px;background:var(--bubble);border-right:1.5px solid var(--card-line);border-bottom:1.5px solid var(--card-line);transform:rotate(45deg);border-bottom-right-radius:3px}
+.bubble-line{margin:0 0 9px;font-family:var(--font-hand);font-size:16px;line-height:1.8;color:var(--ink);letter-spacing:.01em}
+.bubble-line:first-child{font-size:clamp(17px,4.6vw,19px)}
+.bubble-line:last-child{margin-bottom:0}
+.dossier{margin:0 0 20px;padding:18px 18px 16px;border-radius:20px;border:1px solid var(--card-line);background:var(--card-bg);box-shadow:var(--shadow)}
+.dossier-title{margin:0 0 14px;font-size:11.5px;color:var(--sub);letter-spacing:.2em}
+.attr{margin:0 0 12px}
+.attr:last-of-type{margin-bottom:0}
+.attr-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;font-size:12.5px;color:var(--sub);letter-spacing:.03em}
+.attr-num{font-size:13px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.bar{height:8px;border-radius:999px;background:rgba(74,58,68,.07);overflow:hidden}
+.hidden-end .bar{background:rgba(255,255,255,.12)}
+.bar i{display:block;height:100%;width:0;border-radius:999px;background:var(--bar,#F6A9C0);transition:width 1s cubic-bezier(.22,.9,.3,1) .12s}
+.mix{margin:14px 0 0;font-size:12px;color:var(--sub);letter-spacing:.02em}
+.anime-row{display:flex;gap:12px;padding:12px 0;border-bottom:1px dashed var(--card-line)}
+.anime-row:first-of-type{padding-top:0}
+.anime-row:last-child{border-bottom:none;padding-bottom:0}
+.avatar{flex:0 0 auto;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-hand);font-size:19px;font-weight:700;letter-spacing:.02em;box-shadow:0 6px 14px rgba(211,141,166,.22)}
+.anime-main{flex:1;min-width:0}
+.anime-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.anime-name{font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.4}
+.anime-pct{flex:0 0 auto;font-size:12px;font-weight:700;color:#D97A9B;font-variant-numeric:tabular-nums}
+.hidden-end .anime-pct{color:#F0A7C4}
+.anime-from{margin:2px 0 7px;font-size:11.5px;color:var(--sub)}
+.bar.slim{height:6px}
+.anime-note{margin:7px 0 0;font-size:12px;line-height:1.65;color:var(--sub)}
+.love-head{display:flex;align-items:flex-end;gap:12px;margin-bottom:14px}
+.love-pct{flex:0 0 auto;font-family:var(--font-hand);font-size:42px;line-height:1;font-weight:700;letter-spacing:-.01em;background:linear-gradient(120deg,#E8759B,#B78BDB);-webkit-background-clip:text;background-clip:text;color:#C2668C;-webkit-text-fill-color:transparent}
+.hidden-end .love-pct{background:linear-gradient(120deg,#FFC3DA,#D3B8F5);-webkit-background-clip:text;background-clip:text;color:#FFC3DA;-webkit-text-fill-color:transparent}
+.love-pct em{font-style:normal;font-size:17px}
+.love-note{flex:1;margin:0 0 3px;font-size:12px;line-height:1.65;color:var(--sub);text-align:right}
+.love-item{display:grid;grid-template-columns:46px 1fr 40px;align-items:center;gap:9px;margin:0 0 9px;font-size:12px;color:var(--sub);letter-spacing:.02em}
+.love-item:last-child{margin-bottom:0}
+.love-item b{text-align:right;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.analysis{margin:4px 2px 22px;font-size:15px;line-height:1.95;color:var(--ink)}
+.badges-label{margin:0 0 9px;font-size:11.5px;color:var(--sub);letter-spacing:.18em}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.badge{padding:5px 11px;border-radius:999px;border:1px solid var(--card-line);background:linear-gradient(135deg,rgba(246,169,192,.16),rgba(199,184,232,.22));color:var(--ink);font-size:12px;letter-spacing:.02em}
+.meme{margin:0 0 26px;font-size:12.5px;line-height:1.9;color:var(--sub);text-align:center;letter-spacing:.02em}
+.actions{display:grid;gap:12px}
+.fallback{margin-top:14px}
+.fallback[hidden]{display:none}
+.fallback textarea{display:block;width:100%;min-height:112px;padding:12px;border-radius:14px;border:1px solid var(--card-line);background:var(--card-bg);color:var(--ink);font-family:inherit;font-size:13px;line-height:1.7;resize:vertical}
+.fallback p{margin:8px 0 0;font-size:11.5px;color:var(--sub);text-align:center}
+
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 30px);z-index:90;max-width:82vw;padding:10px 18px;border-radius:999px;background:rgba(52,40,50,.93);color:#fff;font-size:13px;line-height:1.5;text-align:center;opacity:0;transform:translate(-50%,14px);pointer-events:none;transition:opacity .25s ease,transform .25s ease}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+@keyframes screenIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes fall{0%{transform:translate3d(0,-12vh,0) rotate(0deg)}50%{transform:translate3d(26px,52vh,0) rotate(220deg)}100%{transform:translate3d(-10px,112vh,0) rotate(520deg)}}
+@keyframes fallB{0%{transform:translate3d(0,-12vh,0) rotate(0deg)}50%{transform:translate3d(-30px,50vh,0) rotate(-200deg)}100%{transform:translate3d(12px,112vh,0) rotate(-540deg)}}
+
+@media (hover:hover){.btn-primary:hover{box-shadow:0 14px 30px rgba(214,123,163,.42)}.opt:hover{transform:translateY(-1px)}.back:hover:not(:disabled){background:rgba(255,255,255,.96)}}
+@media (prefers-reduced-motion:reduce){.petals i,.start-mark{animation:none}.screen,.opt,.reveal{animation-duration:.01s !important}.bar i{transition-duration:.01s !important}}
+</style>
+</head>
+<body>
+<div class="petals" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<main class="app">
+  <section class="screen" id="screenStart">
+    <div class="start-mark" aria-hidden="true">✿</div>
+    <h1 class="start-title">如果你的 OC 来到现实，<br>TA 会和你说什么？</h1>
+    <p class="start-sub">12 道题，测出你是哪种类型的 OC 创作者</p>
+    <button class="btn btn-primary" id="btnStart" type="button">开始测试</button>
+    <p class="start-foot">纯娱乐 · 约 2 分钟 · 凭第一直觉选</p>
+  </section>
+
+  <section class="screen" id="screenQuiz">
+    <div class="quiz-top">
+      <p class="quiz-count">第 <b id="qIndex">1</b> 题 / 共 <span id="qTotal">12</span> 题</p>
+      <button class="back" id="btnBack" type="button">上一题</button>
+    </div>
+    <div class="progress" role="progressbar" aria-label="答题进度"><i id="progressFill"></i></div>
+    <h2 class="q-text" id="qText" aria-live="polite"></h2>
+    <div class="options" id="options"></div>
+    <p class="quiz-tip">凭第一直觉，选最像你的那个</p>
+  </section>
+
+  <section class="screen" id="screenResult">
+    <div id="resultRoot"></div>
+  </section>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script id="quizData" type="application/json">
+{
+  "types": [
+    {
+      "name": "刀子制造机",
+      "tag": "悲剧美学担当 · 虐心剧作家",
+      "lines": [
+        "我活着的每一章，都是给你准备的刀子。",
+        "你写我的时候手在抖，对吧？我看见了。",
+        "别怕，最后一页我会回头看你一眼——那是你留给我的唯一温柔。"
+      ],
+      "attrs": [
+        [
+          "悲剧值",
+          95
+        ],
+        [
+          "治愈力",
+          20
+        ],
+        [
+          "中二值",
+          55
+        ],
+        [
+          "整活力",
+          30
+        ],
+        [
+          "松弛感",
+          10
+        ]
+      ],
+      "anime": [
+        {
+          "name": "艾伦·耶格尔",
+          "from": "《进击的巨人》",
+          "match": 86,
+          "note": "为了终点，把自己也写进代价里。"
+        },
+        {
+          "name": "早川秋",
+          "from": "《电锯人》",
+          "match": 79,
+          "note": "把温柔藏在最凶的表情后面。"
+        }
+      ],
+      "love": {
+        "pct": 96,
+        "note": "剩下那一点，用来准备下一把刀。",
+        "items": [
+          [
+            "心疼",
+            45
+          ],
+          [
+            "依赖",
+            25
+          ],
+          [
+            "占有",
+            20
+          ],
+          [
+            "吐槽",
+            10
+          ]
+        ]
+      },
+      "analysis": "你捏 OC 的时候心里是痛的，而且是主动选的痛。你相信不完美的结局才配得上「深刻」两个字，于是 TA 从诞生那天起就带着倒计时。你把说不出口的话塞进 TA 的命运，替自己疼了一次。这样的你其实比谁都温柔，只是温柔得有点刀。",
+      "memes": [
+        "别哭，这是为艺术献祭",
+        "刀子 Under Ground",
+        "下一集：回忆杀"
+      ],
+      "share": "我测出来是「刀子制造机」，我给 OC 写的每个结局都是刀🔪 你的 OC 是哪种类型？来测测 👇 #OC测试 #二次元 #原创角色"
+    },
+    {
+      "name": "治愈系白月光",
+      "tag": "人间小太阳 · 温柔到犯规",
+      "lines": [
+        "你累了吧，坐下来，我给你讲个故事。",
+        "不用急着变好，今天先好好吃饭。",
+        "你把我写得那么温柔，是不是也想被这样对待一次？"
+      ],
+      "attrs": [
+        [
+          "悲剧值",
+          10
+        ],
+        [
+          "治愈力",
+          98
+        ],
+        [
+          "中二值",
+          25
+        ],
+        [
+          "整活力",
+          40
+        ],
+        [
+          "松弛感",
+          70
+        ]
+      ],
+      "anime": [
+        {
+          "name": "宫水三叶",
+          "from": "《你的名字》",
+          "match": 85,
+          "note": "温柔是本能，也是勇气。"
+        },
+        {
+          "name": "平泽唯",
+          "from": "《轻音少女》",
+          "match": 80,
+          "note": "天然治愈，靠近就放松。"
+        }
+      ],
+      "love": {
+        "pct": 98,
+        "note": "剩下那一点，留给 TA 自己好好活着。",
+        "items": [
+          [
+            "心疼",
+            35
+          ],
+          [
+            "依赖",
+            30
+          ],
+          [
+            "宠溺",
+            25
+          ],
+          [
+            "吐槽",
+            10
+          ]
+        ]
+      },
+      "analysis": "你捏 OC 的时候心里是软的。你把自己得不到过的温柔一点一点全给了 TA，不忍心让 TA 受一点苦，因为你太知道被善待是什么滋味。TA 是你写给世界的善意，也是你给自己的交代。这样的角色，光是存在就已经在治愈别人了。",
+      "memes": [
+        "世界破破烂烂，OC 缝缝补补",
+        "今日份糖分已到账",
+        "看完这集就早点睡"
+      ],
+      "share": "我测出来是「治愈系白月光」，原来我捏 OC 的时候一直在偷偷治愈自己 ☀️ #OC测试 #二次元 #原创角色"
+    },
+    {
+      "name": "中二病晚期",
+      "tag": "史诗级设定控 · 血脉觉醒者",
+      "lines": [
+        "觉醒吧！你体内沉睡着我 OC 的血脉！",
+        "吾之右眼，早已看穿这条时间线的结局。",
+        "别慌，史诗的第三幕，才刚刚开始。"
+      ],
+      "attrs": [
+        [
+          "悲剧值",
+          40
+        ],
+        [
+          "治愈力",
+          35
+        ],
+        [
+          "中二值",
+          99
+        ],
+        [
+          "整活力",
+          60
+        ],
+        [
+          "松弛感",
+          20
+        ]
+      ],
+      "anime": [
+        {
+          "name": "小鸟游六花",
+          "from": "《中二病也要谈恋爱》",
+          "match": 93,
+          "note": "邪王真眼，永不毕业。"
+        },
+        {
+          "name": "鲁路修",
+          "from": "《反叛的鲁路修》",
+          "match": 88,
+          "note": "世界由我重新写过。"
+        }
+      ],
+      "love": {
+        "pct": 92,
+        "note": "剩下那一点，要留给史诗的下一章。",
+        "items": [
+          [
+            "崇拜",
+            35
+          ],
+          [
+            "依赖",
+            25
+          ],
+          [
+            "占有",
+            20
+          ],
+          [
+            "吐槽",
+            20
+          ]
+        ]
+      },
+      "analysis": "你的 OC 不是画出来的，是「觉醒」出来的。你脑内有一整个世界在跑，设定集写到第三部，时间线比作息还复杂。你造 TA 的时候心跳加速，像真的听见了 BGM。别人说你中二，你管那叫史诗感。TA 是平凡生活给你留的一扇传送门。",
+      "memes": [
+        "教练，我想打 OC",
+        "血脉觉醒中……",
+        "BGM 一响，主角登场"
+      ],
+      "share": "我测出来是「中二病晚期」，中二怎么了，我这叫史诗感🔥 #OC测试 #二次元 #原创角色"
+    },
+    {
+      "name": "傲娇毒舌系",
+      "tag": "嘴硬心软冠军 · 反差萌本萌",
+      "lines": [
+        "才不是为了你来的！只是刚好路过而已！",
+        "……喂，你手怎么这么凉，过来一点。",
+        "不许误会，我只是不想你死在我看不见的地方。"
+      ],
+      "attrs": [
+        [
+          "悲剧值",
+          35
+        ],
+        [
+          "治愈力",
+          55
+        ],
+        [
+          "中二值",
+          40
+        ],
+        [
+          "整活力",
+          75
+        ],
+        [
+          "松弛感",
+          45
+        ]
+      ],
+      "anime": [
+        {
+          "name": "逢坂大河",
+          "from": "《龙与虎》",
+          "match": 88,
+          "note": "傲娇教科书，一页都不许跳。"
+        },
+        {
+          "name": "明日香",
+          "from": "《新世纪福音战士》",
+          "match": 84,
+          "note": "凶是真的，心软也是真的。"
+        }
+      ],
+      "love": {
+        "pct": 90,
+        "note": "剩下那一点，绝对、绝对不是因为害羞。",
+        "items": [
+          [
+            "嘴硬",
+            35
+          ],
+          [
+            "心软",
+            30
+          ],
+          [
+            "依赖",
+            20
+          ],
+          [
+            "占有",
+            15
+          ]
+        ]
+      },
+      "analysis": "你的 OC 嘴上没一句好话，但你给 TA 写的每个动作都在偷偷心软。你偏爱这种反差——凶巴巴地说着最硬的话，转身却把人护在身后。你造 TA 的时候，其实是给自己找了一个「不用装坚强也能被爱」的出口。反差萌的本质是：你懂我。",
+      "memes": [
+        "口嫌体正直",
+        "真香定律永不缺席",
+        "笨蛋，无路赛，三连"
+      ],
+      "share": "我测出来是「傲娇毒舌系」，嘴硬心软说的就是我 OC💢 #OC测试 #二次元 #原创角色"
+    },
+    {
+      "name": "病娇黑化系",
+      "tag": "危险又迷人 · 占有欲天花板",
+      "lines": [
+        "你终于来了。我等了很久……久到忘了为什么。",
+        "你去见了谁，我全都知道——别怕，我只是想知道。",
+        "这个世界不太好，那就把它删掉，只留你和我。"
+      ],
+      "attrs": [
+        [
+          "悲剧值",
+          70
+        ],
+        [
+          "治愈力",
+          25
+        ],
+        [
+          "中二值",
+          60
+        ],
+        [
+          "整活力",
+          20
+        ],
+        [
+          "松弛感",
+          10
+        ]
+      ],
+      "anime": [
+        {
+          "name": "我妻由乃",
+          "from": "《未来日记》",
+          "match": 91,
+          "note": "爱到极致是偏执。"
+        },
+        {
+          "name": "桂言叶",
+          "from": "《日在校园》",
+          "match": 83,
+          "note": "温柔失控时最吓人。"
+        }
+      ],
+      "love": {
+        "pct": 100,
+        "note": "没有剩下。一点都没有。",
+        "items": [
+          [
+            "占有",
+            45
+          ],
+          [
+            "依赖",
+            30
+          ],
+          [
+            "心疼",
+            15
+          ],
+          [
+            "疯狂",
+            10
+          ]
+        ]
+      },
+      "analysis": "你给 OC 的爱是带重量的，重到有点危险。你相信真正的羁绊应该不计代价，于是 TA 会把全世界都让出去，只留一个人。你造 TA 的时候，心里大概也偷偷想被这样坚定地选择过。TA 替你说了那些不敢说出口的「我只想要你」。",
+      "memes": [
+        "爱得深沉，也爱得吓人",
+        "这算不算一种病娇文学",
+        "病娇预警，请勿模仿"
+      ],
+      "share": "我测出来是「病娇黑化系」，爱得危险又认真🖤 #OC测试 #二次元 #原创角色"
+    },
+    {
+      "name": "沙雕团宠系",
+      "tag": "群聊气氛组 · 走到哪热闹到哪",
+      "lines": [
+        "走走走！带你去吃好吃的，我请客（假装很有钱.jpg）",
+        "等一下，我先给你表演一个原地社死。",
+        "别难过，我把全世界的梗都背下来哄你。"
+      ],
+      "attrs": [
+        [
+          "悲剧值",
+          5
+        ],
+        [
+          "治愈力",
+          80
+        ],
+        [
+          "中二值",
+          30
+        ],
+        [
+          "整活力",
+          99
+        ],
+        [
+          "松弛感",
+          75
+        ]
+      ],
+      "anime": [
+        {
+          "name": "野原新之助",
+          "from": "《蜡笔小新》",
+          "match": 87,
+          "note": "气氛组祖师爷，名场面制造机。"
+        },
+        {
+          "name": "后藤一里",
+          "from": "《孤独摇滚》",
+          "match": 79,
+          "note": "社恐也能被一群人宠着。"
+        }
+      ],
+      "love": {
+        "pct": 85,
+        "note": "剩下那点，分给群聊里的每一个人。",
+        "items": [
+          [
+            "逗你",
+            40
+          ],
+          [
+            "依赖",
+            25
+          ],
+          [
+            "宠溺",
+            20
+          ],
+          [
+            "吐槽",
+            15
+          ]
+        ]
+      },
+      "analysis": "你造 OC 是为了快乐，纯粹的、不需要理由的快乐。TA 是你所有沙雕念头的收纳盒：说过的蠢话、想过的怪事、半夜笑出声的段子，全给了 TA。你不需要 TA 拯救世界，TA 只要在场，群聊就不会冷场。这样的 OC，是朋友圈里最缺的那种人。",
+      "memes": [
+        "哈哈哈哈哈哈哈",
+        "精神状态非常好",
+        "这波操作，弹幕都笑了"
+      ],
+      "share": "我测出来是「沙雕团宠系」，我的 OC 就是群聊气氛组本人😂 #OC测试 #二次元 #原创角色"
+    },
+    {
+      "name": "佛系摆烂仙",
+      "tag": "精神状态领先 · 反内耗代表",
+      "lines": [
+        "来了啊……随便坐。我刚晒完太阳，现在不想动。",
+        "急什么，反正世界末日也会先通知别人的。",
+        "你要是累了，就跟我一起躺一会儿，天塌不了。"
+      ],
+      "attrs": [
+        [
+          "悲剧值",
+          15
+        ],
+        [
+          "治愈力",
+          65
+        ],
+        [
+          "中二值",
+          20
+        ],
+        [
+          "整活力",
+          45
+        ],
+        [
+          "松弛感",
+          99
+        ]
+      ],
+      "anime": [
+        {
+          "name": "坂田银时",
+          "from": "《银魂》",
+          "match": 86,
+          "note": "嘴上摆烂，身体很诚实。"
+        },
+        {
+          "name": "奈良鹿丸",
+          "from": "《火影忍者》",
+          "match": 82,
+          "note": "麻烦死了，但靠得住。"
+        }
+      ],
+      "love": {
+        "pct": 78,
+        "note": "剩下那点，用来晒太阳。",
+        "items": [
+          [
+            "松弛",
+            35
+          ],
+          [
+            "依赖",
+            25
+          ],
+          [
+            "宠溺",
+            25
+          ],
+          [
+            "吐槽",
+            15
+          ]
+        ]
+      },
+      "analysis": "你给 OC 的不是野心，是松弛。在人人都在卷的世界里，你造了一个理直气壮躺平的 TA。TA 不争不抢，却活得比谁都明白。你造 TA 的时候大概也偷偷许了愿：希望有一天能像 TA 一样，心安理得地什么都不做。TA 是你给自己的精神缓冲垫。",
+      "memes": [
+        "你相信光吗？不，我只相信躺平",
+        "松弛感天花板",
+        "战斗什么的，明天再说"
+      ],
+      "share": "我测出来是「佛系摆烂仙」，精神状态领先我本人一百年🌿 #OC测试 #二次元 #原创角色"
+    },
+    {
+      "name": "高冷天才系",
+      "tag": "智商天花板 · 人形外挂",
+      "lines": [
+        "你问的问题，我三秒前就推演完了。",
+        "你今天的表情，第 7 种，和前天的第 3 种很像。",
+        "别乱想，我只是刚好……想看看你。"
+      ],
+      "attrs": [
+        [
+          "悲剧值",
+          30
+        ],
+        [
+          "治愈力",
+          40
+        ],
+        [
+          "中二值",
+          55
+        ],
+        [
+          "整活力",
+          25
+        ],
+        [
+          "松弛感",
+          40
+        ]
+      ],
+      "anime": [
+        {
+          "name": "绫小路清隆",
+          "from": "《欢迎来到实力至上主义的教室》",
+          "match": 90,
+          "note": "一切都在计算中。"
+        },
+        {
+          "name": "利威尔",
+          "from": "《进击的巨人》",
+          "match": 85,
+          "note": "话少，但句句有效。"
+        }
+      ],
+      "love": {
+        "pct": 88,
+        "note": "剩下那点，用于计算你的下一步。",
+        "items": [
+          [
+            "守护",
+            30
+          ],
+          [
+            "观察",
+            30
+          ],
+          [
+            "依赖",
+            20
+          ],
+          [
+            "吐槽",
+            20
+          ]
+        ]
+      },
+      "analysis": "你把 OC 造得比你冷静、比你聪明、比你不慌。TA 是所有「如果当时我能这样就好了」的答案。你给 TA 写了完美的逻辑和无可挑剔的布局，因为你想有一个人替你赢下所有棘手的局。TA 站在那里，就是你理想中的自己。",
+      "memes": [
+        "智商碾压",
+        "这也在你的计算之中吗",
+        "一切都在计划之中"
+      ],
+      "share": "我测出来是「高冷天才系」，果然我的 OC 是我理想中的自己✨ #OC测试 #二次元 #原创角色"
+    }
+  ],
+  "hidden": {
+    "name": "你的 OC，其实是你自己",
+    "mark": "隐藏结局 · 稀有",
+    "lines": [
+      "你设定的是 OC，写的是自己。",
+      "你写给我的每一句台词，都是你不敢说的那句。",
+      "现在，抬头看看镜子——我在里面等你。"
+    ],
+    "anime": [
+      {
+        "name": "你本人",
+        "letter": "你",
+        "from": "现实世界 · 未上映",
+        "match": 100,
+        "note": "没有人比你更像 TA。"
+      },
+      {
+        "name": "你还没写完的那个自己",
+        "letter": "我",
+        "from": "下一版草稿",
+        "match": 99,
+        "note": "下一个版本，也是你。"
+      }
+    ],
+    "love": {
+      "pct": 100,
+      "note": "因为 TA 就是你。",
+      "items": [
+        [
+          "共鸣",
+          40
+        ],
+        [
+          "心疼",
+          30
+        ],
+        [
+          "依赖",
+          20
+        ],
+        [
+          "占有",
+          10
+        ]
+      ]
+    },
+    "analysis": "你以为你在造一个角色，其实你一笔一划写的都是自己。那些「TA 不敢说的话」「TA 藏起来的痛」「TA 想要却得不到的温柔」，全是你的。OC 是你给自己留的一面镜子，照出你没勇气承认的部分。破防了吧？这才是最真实的你。",
+    "memes": [
+      "破防了兄弟们",
+      "镜子の觉醒",
+      "第四面墙，碎了"
+    ],
+    "share": "我测出了隐藏结局「本体是你」……破防了，我设定的 OC 写真的全是我自己😭 #OC测试 #二次元 #原创角色"
+  },
+  "questions": [
+    {
+      "q": "你第一次捏出这个 OC 的时候，是在什么状态下？",
+      "options": [
+        {
+          "text": "深夜 emo，顺手把最痛的一段经历写了进去",
+          "t": 0,
+          "m": true
+        },
+        {
+          "text": "午后阳光很好，突然想创造一个温柔的人",
+          "t": 1
+        },
+        {
+          "text": "脑子里突然响起史诗 BGM，立刻开写",
+          "t": 2
+        },
+        {
+          "text": "嘴上说「随便画画」，手指却诚实地细化到瞳孔",
+          "t": 3
+        }
+      ]
+    },
+    {
+      "q": "捏人设的时候，你最先定下来的是？",
+      "options": [
+        {
+          "text": "TA 的执念——那个无论如何都要得到的人",
+          "t": 4,
+          "m": true
+        },
+        {
+          "text": "TA 的搞笑缺点，比如路痴或者贪吃",
+          "t": 5,
+          "ach": "梗王认证"
+        },
+        {
+          "text": "其实没怎么想，随手点出来的",
+          "t": 6
+        },
+        {
+          "text": "完整的能力体系和世界观",
+          "t": 7
+        }
+      ]
+    },
+    {
+      "q": "给 OC 起名字的时候，你？",
+      "options": [
+        {
+          "text": "翻遍诗词，选了个注定悲剧的字",
+          "t": 2,
+          "m": true,
+          "ach": "设定控の证明"
+        },
+        {
+          "text": "选了个念起来就觉得温暖的名字",
+          "t": 3
+        },
+        {
+          "text": "起了个长度堪比史诗的长名",
+          "t": 0
+        },
+        {
+          "text": "改了八百遍，最后用了最初那个",
+          "t": 1
+        }
+      ]
+    },
+    {
+      "q": "画／写 OC 的第一稿，你通常？",
+      "options": [
+        {
+          "text": "反复改，总觉得还不够「TA 该有的样子」",
+          "t": 6,
+          "ach": "精神状态领先100年"
+        },
+        {
+          "text": "边画边笑，画完自己先乐半天",
+          "t": 7,
+          "m": true
+        },
+        {
+          "text": "画一半困了，第二天接着画",
+          "t": 4
+        },
+        {
+          "text": "先在脑子里建好模型，一次成型",
+          "t": 5
+        }
+      ]
+    },
+    {
+      "q": "在你眼里，OC 更像？",
+      "options": [
+        {
+          "text": "一面碎了的镜子，照出我不敢看的东西",
+          "t": 3
+        },
+        {
+          "text": "冬天里的一杯热可可",
+          "t": 0,
+          "m": true
+        },
+        {
+          "text": "一把等待被拔出的石中剑",
+          "t": 1
+        },
+        {
+          "text": "嘴上说不要、身体很诚实的家伙",
+          "t": 2
+        }
+      ]
+    },
+    {
+      "q": "如果 OC 突然出现在你面前，你的第一反应是？",
+      "options": [
+        {
+          "text": "TA 会不会只属于我一个人",
+          "t": 7,
+          "ach": "智商碾压"
+        },
+        {
+          "text": "拉 TA 去吃顿好的，顺便拍一百张照",
+          "t": 4
+        },
+        {
+          "text": "愣了一下，然后问「你吃了没」",
+          "t": 5,
+          "m": true
+        },
+        {
+          "text": "迅速打量，判断 TA 的战力和智商排第几",
+          "t": 6
+        }
+      ]
+    },
+    {
+      "q": "你给 OC 设定的「最重要的关系」通常是？",
+      "options": [
+        {
+          "text": "一个注定要失去的人",
+          "t": 1
+        },
+        {
+          "text": "一个会一直等 TA 回家的人",
+          "t": 2
+        },
+        {
+          "text": "一个宿敌，或者命中注定的对手",
+          "t": 3,
+          "m": true
+        },
+        {
+          "text": "一个嘴硬心软、吵吵闹闹的家人",
+          "t": 0
+        }
+      ]
+    },
+    {
+      "q": "别人说你的 OC「好像你」，你会？",
+      "options": [
+        {
+          "text": "偷偷高兴，觉得被理解了",
+          "t": 5
+        },
+        {
+          "text": "哈哈对啊，我就是把梗都写进去了",
+          "t": 6
+        },
+        {
+          "text": "是吗，可能是吧，随便啦",
+          "t": 7
+        },
+        {
+          "text": "不至于，我比 TA 理性多了",
+          "t": 4,
+          "m": true
+        }
+      ]
+    },
+    {
+      "q": "你给 OC 写故事的结局，通常是？",
+      "options": [
+        {
+          "text": "幸福到顶点然后碎掉，才够味",
+          "t": 0,
+          "ach": "刀子Under Ground"
+        },
+        {
+          "text": "所有人都好好活着，阳光正好",
+          "t": 1
+        },
+        {
+          "text": "决战之后开启新篇章，史诗未完",
+          "t": 2
+        },
+        {
+          "text": "吵吵闹闹地在一起，谁也不肯先认输",
+          "t": 3,
+          "m": true
+        }
+      ]
+    },
+    {
+      "q": "写 OC 的故事时，你最常有的心情是？",
+      "options": [
+        {
+          "text": "想让 TA 得到一切，又怕 TA 被夺走",
+          "t": 4
+        },
+        {
+          "text": "边写边笑，写着写着把自己逗乐了",
+          "t": 5
+        },
+        {
+          "text": "写不写随缘，灵感来了才动笔",
+          "t": 6
+        },
+        {
+          "text": "先列大纲，把逻辑漏洞补完再动笔",
+          "t": 7
+        }
+      ]
+    },
+    {
+      "q": "你的 OC 的故事，主角光环强吗？",
+      "options": [
+        {
+          "text": "不强，甚至有点惨，但很美",
+          "t": 2
+        },
+        {
+          "text": "有，但更像是被世界温柔以待",
+          "t": 3
+        },
+        {
+          "text": "强到离谱，毕竟是天选之子",
+          "t": 0
+        },
+        {
+          "text": "嘴上说没有，实际一路开挂",
+          "t": 1
+        }
+      ]
+    },
+    {
+      "q": "如果 OC 来到现实，TA 对你说的第一句话是？",
+      "options": [
+        {
+          "text": "「你终于来了，我等了很久。」",
+          "t": 6
+        },
+        {
+          "text": "「走！带你去吃好吃的！」",
+          "t": 7
+        },
+        {
+          "text": "「哦，你来了啊……随便坐。」",
+          "t": 4
+        },
+        {
+          "text": "「你问的问题，我三秒前就推演完了。」",
+          "t": 5
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script>
+(function () {
+  'use strict';
+
+  var DATA = JSON.parse(document.getElementById('quizData').textContent);
+  var TYPES = DATA.types;
+  var HIDDEN = DATA.hidden;
+  var QUESTIONS = DATA.questions;
+  var PRIORITY = ['刀子制造机', '治愈系白月光', '中二病晚期', '傲娇毒舌系', '病娇黑化系', '沙雕团宠系', '佛系摆烂仙', '高冷天才系'];
+  var BAR_COLORS = ['#F6A9C0', '#A8DBC8', '#C7B8E8', '#FFC58F', '#9EC9EC'];
+  var AVATAR_COLORS = [['#F6A9C0', '#C7B8E8'], ['#A8DBC8', '#9EC9EC']];
+  var TOTAL = QUESTIONS.length;
+  var HIDE_MIN = 5;
+
+  var answers = [];
+  for (var i = 0; i < TOTAL; i++) { answers.push(null); }
+  var qi = 0;
+  var lock = false;
+  var lastShare = '';
+
+  var elQIndex = document.getElementById('qIndex');
+  var elQTotal = document.getElementById('qTotal');
+  var elBar = document.getElementById('progressFill');
+  var elQText = document.getElementById('qText');
+  var elOptions = document.getElementById('options');
+  var elBack = document.getElementById('btnBack');
+  var elResult = document.getElementById('resultRoot');
+  var elToast = document.getElementById('toast');
+  var toastTimer = null;
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function toast(msg) {
+    elToast.textContent = msg;
+    elToast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { elToast.classList.remove('show'); }, 2200);
+  }
+
+  function showScreen(id) {
+    var list = document.querySelectorAll('.screen');
+    for (var i = 0; i < list.length; i++) {
+      list[i].classList.toggle('active', list[i].id === id);
+    }
+    window.scrollTo(0, 0);
+  }
+
+  function renderQuestion() {
+    elQIndex.textContent = String(qi + 1);
+    elQTotal.textContent = String(TOTAL);
+    var filled = 0;
+    for (var i = 0; i < TOTAL; i++) { if (answers[i] !== null) { filled++; } }
+    elBar.style.width = (filled / TOTAL * 100).toFixed(2) + '%';
+    elBack.disabled = qi === 0;
+
+    var q = QUESTIONS[qi];
+    elQText.textContent = q.q;
+    elOptions.innerHTML = '';
+    for (var k = 0; k < q.options.length; k++) {
+      var opt = q.options[k];
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt';
+      btn.dataset.idx = String(k);
+      btn.setAttribute('aria-pressed', answers[qi] === k ? 'true' : 'false');
+      btn.style.setProperty('--d', (k * 0.045).toFixed(3) + 's');
+
+      var mark = document.createElement('span');
+      mark.className = 'mark';
+      mark.textContent = 'ABCD'.charAt(k);
+
+      var txt = document.createElement('span');
+      txt.className = 'opt-text';
+      txt.textContent = opt.text;
+
+      btn.appendChild(mark);
+      btn.appendChild(txt);
+      btn.addEventListener('click', onPick);
+      elOptions.appendChild(btn);
+    }
+  }
+
+  function onPick(ev) {
+    if (lock) { return; }
+    var btn = ev.currentTarget;
+    var idx = parseInt(btn.dataset.idx, 10);
+    if (isNaN(idx)) { return; }
+    lock = true;
+
+    var all = elOptions.querySelectorAll('.opt');
+    for (var i = 0; i < all.length; i++) {
+      all[i].setAttribute('aria-pressed', i === idx ? 'true' : 'false');
+    }
+    try { if (navigator.vibrate) { navigator.vibrate(8); } } catch (e) {}
+
+    setTimeout(function () {
+      answers[qi] = idx;
+      lock = false;
+      if (qi < TOTAL - 1) {
+        qi++;
+        renderQuestion();
+      } else {
+        finish();
+      }
+    }, 280);
+  }
+
+  function goBack() {
+    if (lock || qi === 0) { return; }
+    qi--;
+    renderQuestion();
+  }
+
+  function compute() {
+    var scores = [0, 0, 0, 0, 0, 0, 0, 0];
+    var proj = 0;
+    var ach = [];
+    for (var i = 0; i < TOTAL; i++) {
+      var a = answers[i];
+      if (a === null) { continue; }
+      var o = QUESTIONS[i].options[a];
+      scores[o.t]++;
+      if (o.m) { proj++; }
+      if (o.ach && ach.indexOf(o.ach) < 0) { ach.push(o.ach); }
+    }
+    if (proj >= HIDE_MIN) {
+      return { hidden: true, proj: proj, ach: ach.slice(0, 5), scores: scores };
+    }
+    var order = [0, 1, 2, 3, 4, 5, 6, 7];
+    order.sort(function (x, y) {
+      if (scores[y] !== scores[x]) { return scores[y] - scores[x]; }
+      return PRIORITY.indexOf(TYPES[x].name) - PRIORITY.indexOf(TYPES[y].name);
+    });
+    var main = order[0];
+    var sub = order[1];
+    var denom = scores[main] + scores[sub];
+    var p = denom > 0 ? Math.round(scores[sub] / denom * 100) : 0;
+    return { hidden: false, main: main, sub: sub, p: p, ach: ach.slice(0, 5), scores: scores };
+  }
+
+  function badgeHTML(ach, delay) {
+    if (!ach.length) { return ''; }
+    var out = '<p class="badges-label reveal" style="--d:' + delay + 's">成就徽章</p><div class="badges reveal" style="--d:' + delay + 's">';
+    for (var i = 0; i < ach.length; i++) {
+      out += '<span class="badge">' + esc(ach[i]) + '</span>';
+    }
+    return out + '</div>';
+  }
+
+  function memeHTML(memes, delay) {
+    var parts = [];
+    for (var i = 0; i < memes.length; i++) { parts.push('「' + esc(memes[i]) + '」'); }
+    return '<p class="meme reveal" style="--d:' + delay + 's">' + parts.join('<br>') + '</p>';
+  }
+
+  function actionsHTML(delay) {
+    return '<div class="actions reveal" style="--d:' + delay + 's">' +
+      '<button class="btn btn-primary" id="btnCopy" type="button">复制分享文案</button>' +
+      '<button class="btn btn-ghost" id="btnRetry" type="button">再测一次</button>' +
+      '</div>' +
+      '<div class="fallback" id="copyFallback" hidden><textarea id="shareBox" readonly></textarea><p>复制失败，长按上方文字即可手动复制</p></div>';
+  }
+
+  function dossierHTML(t, r) {
+    var out = '<div class="dossier reveal" style="--d:.24s"><p class="dossier-title">OC 档案</p>';
+    for (var i = 0; i < t.attrs.length; i++) {
+      var name = t.attrs[i][0];
+      var val = t.attrs[i][1];
+      out += '<div class="attr"><div class="attr-top"><span>' + esc(name) + '</span><span class="attr-num">' + val + '</span></div>' +
+        '<div class="bar"><i data-w="' + val + '" style="--bar:' + BAR_COLORS[i % BAR_COLORS.length] + '"></i></div></div>';
+    }
+    if (r.p > 0) {
+      out += '<p class="mix">副类型 mixing：' + esc(TYPES[r.sub].name) + ' ' + r.p + '%</p>';
+    }
+    return out + '</div>';
+  }
+
+  function bubbleHTML(lines, delay) {
+    var out = '<div class="bubble reveal" style="--d:' + delay + 's">';
+    for (var i = 0; i < lines.length; i++) {
+      out += '<p class="bubble-line">「' + esc(lines[i]) + '」</p>';
+    }
+    return out + '</div>';
+  }
+
+  function animeHTML(list, delay) {
+    var out = '<div class="dossier reveal" style="--d:' + delay + 's"><p class="dossier-title">相似动漫人物</p>';
+    for (var i = 0; i < list.length; i++) {
+      var a = list[i];
+      var g = AVATAR_COLORS[i % AVATAR_COLORS.length];
+      out += '<div class="anime-row">' +
+        '<div class="avatar" style="background:linear-gradient(135deg,' + g[0] + ',' + g[1] + ')">' + esc(a.letter || a.name.charAt(0)) + '</div>' +
+        '<div class="anime-main">' +
+          '<div class="anime-top"><span class="anime-name">' + esc(a.name) + '</span><span class="anime-pct">' + a.match + '%</span></div>' +
+          '<p class="anime-from">' + esc(a.from) + '</p>' +
+          '<div class="bar slim"><i data-w="' + a.match + '" style="--bar:' + g[1] + '"></i></div>' +
+          '<p class="anime-note">' + esc(a.note) + '</p>' +
+        '</div>' +
+        '</div>';
+    }
+    return out + '</div>';
+  }
+
+  function loveHTML(love, delay) {
+    var out = '<div class="dossier reveal" style="--d:' + delay + 's"><p class="dossier-title">TA 对你的感情占比</p>' +
+      '<div class="love-head"><span class="love-pct">' + love.pct + '<em>%</em></span><p class="love-note">' + esc(love.note) + '</p></div>' +
+      '<div class="love-items">';
+    for (var i = 0; i < love.items.length; i++) {
+      out += '<div class="love-item"><span>' + esc(love.items[i][0]) + '</span>' +
+        '<div class="bar slim"><i data-w="' + love.items[i][1] + '" style="--bar:' + BAR_COLORS[i % BAR_COLORS.length] + '"></i></div>' +
+        '<b>' + love.items[i][1] + '%</b></div>';
+    }
+    return out + '</div></div>';
+  }
+
+  function buildResult(r) {
+    var html = '';
+    if (r.hidden) {
+      html += '<p class="res-kicker reveal" style="--d:0s">你的 OC 人设类型是</p>';
+      html += '<div class="ribbon reveal" style="--d:.04s">' + esc(HIDDEN.mark) + '</div>';
+      html += '<h2 class="res-name reveal" style="--d:.08s">' + esc(HIDDEN.name) + '</h2>';
+      html += bubbleHTML(HIDDEN.lines, 0.12);
+      html += animeHTML(HIDDEN.anime, 0.18);
+      html += loveHTML(HIDDEN.love, 0.24);
+      html += '<p class="analysis reveal" style="--d:.3s">' + esc(HIDDEN.analysis) + '</p>';
+      html += badgeHTML(r.ach, 0.36);
+      html += memeHTML(HIDDEN.memes, 0.42);
+      lastShare = HIDDEN.share;
+    } else {
+      var t = TYPES[r.main];
+      html += '<p class="res-kicker reveal" style="--d:0s">你的 OC 人设类型是</p>';
+      html += '<h2 class="res-name reveal" style="--d:.05s">' + esc(t.name) + '</h2>';
+      html += '<p class="res-tag reveal" style="--d:.1s">' + esc(t.tag) + '</p>';
+      html += bubbleHTML(t.lines, 0.14);
+      html += dossierHTML(t, r);
+      html += animeHTML(t.anime, 0.28);
+      html += loveHTML(t.love, 0.34);
+      html += '<p class="analysis reveal" style="--d:.4s">' + esc(t.analysis) + '</p>';
+      html += badgeHTML(r.ach, 0.46);
+      html += memeHTML(t.memes, 0.52);
+      lastShare = t.share;
+    }
+    html += actionsHTML(0.58);
+    return html;
+  }
+
+  function finish() {
+    var r = compute();
+    elResult.innerHTML = buildResult(r);
+    document.body.classList.toggle('hidden-end', !!r.hidden);
+    showScreen('screenResult');
+    void elResult.offsetHeight;
+    setTimeout(function () {
+      var bars = elResult.querySelectorAll('.bar i');
+      for (var i = 0; i < bars.length; i++) {
+        bars[i].style.width = bars[i].getAttribute('data-w') + '%';
+      }
+    }, 40);
+  }
+
+  function copyShare() {
+    if (!lastShare) { return; }
+    var text = lastShare;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          hideFallback();
+          toast('已复制，去小红书发帖吧');
+        }, function () {
+          legacyCopy(text);
+        });
+        return;
+      }
+    } catch (e) {}
+    legacyCopy(text);
+  }
+
+  function hideFallback() {
+    var box = document.getElementById('copyFallback');
+    if (box) { box.hidden = true; }
+  }
+
+  function legacyCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '-9999px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    var ok = false;
+    try {
+      ta.select();
+      ta.setSelectionRange(0, text.length);
+      ok = document.execCommand('copy');
+    } catch (e) {
+      ok = false;
+    }
+    document.body.removeChild(ta);
+    if (ok) {
+      hideFallback();
+      toast('已复制，去小红书发帖吧');
+      return;
+    }
+    showFallback(text);
+    toast('复制失败，请长按文本手动复制');
+  }
+
+  function showFallback(text) {
+    var box = document.getElementById('copyFallback');
+    var area = document.getElementById('shareBox');
+    if (!box || !area) { return; }
+    area.value = text;
+    box.hidden = false;
+    try {
+      area.focus();
+      area.select();
+    } catch (e) {}
+  }
+
+  function restart() {
+    for (var i = 0; i < TOTAL; i++) { answers[i] = null; }
+    qi = 0;
+    lock = false;
+    lastShare = '';
+    document.body.classList.remove('hidden-end');
+    elResult.innerHTML = '';
+    renderQuestion();
+    showScreen('screenQuiz');
+  }
+
+  elBack.addEventListener('click', goBack);
+  elResult.addEventListener('click', function (e) {
+    var target = e.target;
+    if (target && target.id === 'btnCopy') { copyShare(); }
+    else if (target && target.id === 'btnRetry') { restart(); }
+  });
+  document.getElementById('btnStart').addEventListener('click', function () {
+    showScreen('screenQuiz');
+    renderQuestion();
+  });
+
+  renderQuestion();
+  showScreen('screenStart');
+})();
+</script>
+</body>
+</html>
